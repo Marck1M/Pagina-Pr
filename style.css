@@ -1,0 +1,368 @@
+/* ===== Colores y tipografías ===== */
+:root {
+  --pared: #3a2819;
+  --pared-oscura: #1d130c;
+  --laton: #c9a24d;
+  --laton-oscuro: #7a5a1c;
+  --pergamino: #eadfc4;
+  --tinta: #2a1c12;
+  --vino: #5a1f1a;
+  --display: "IM Fell English", "Georgia", serif;
+  --texto: "EB Garamond", "Georgia", serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 9rem; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--texto);
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--pergamino);
+  background: var(--pared-oscura);
+}
+
+/* ===== Fondo: sala de museo antiguo (solo CSS) ===== */
+.museo {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 214, 140, .30), transparent 55%),
+    radial-gradient(ellipse at 50% 55%, transparent 35%, rgba(0, 0, 0, .75) 100%),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, .10) 0 2px, transparent 2px 46px),
+    linear-gradient(#4d3522, var(--pared) 55%, var(--pared-oscura));
+}
+
+/* friso y zócalo de madera */
+.museo::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 22vh;
+  height: 12vh;
+  background:
+    linear-gradient(#8b6a2f 0 4px, transparent 4px),
+    linear-gradient(#2a1a0e, #1a0f08);
+  border-top: 2px solid var(--laton-oscuro);
+}
+
+/* piso de damero en perspectiva */
+.piso {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 22vh;
+  overflow: hidden;
+  perspective: 260px;
+  background: #1a0f08;
+}
+.piso::before {
+  content: "";
+  position: absolute;
+  left: -50%; right: -50%;
+  top: 0;
+  height: 220%;
+  background: conic-gradient(#cfc2a3 25%, #3b2a1d 0 50%, #cfc2a3 0 75%, #3b2a1d 0) 0 0 / 100px 100px;
+  transform: rotateX(62deg);
+  transform-origin: top;
+}
+.piso::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(0, 0, 0, .75), rgba(0, 0, 0, .1) 70%);
+}
+
+/* columnas estriadas */
+.columna {
+  position: absolute;
+  top: 0;
+  bottom: 22vh;
+  width: clamp(28px, 7vw, 110px);
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, .6), transparent 35%, transparent 65%, rgba(0, 0, 0, .6)),
+    repeating-linear-gradient(90deg, #6f5d45 0 5px, #b09b7c 5px 11px, #6f5d45 11px 16px, #2f241a 16px 18px);
+  box-shadow: 0 0 40px rgba(0, 0, 0, .7);
+}
+.columna.izq { left: 0; }
+.columna.der { right: 0; }
+.columna::before,
+.columna::after {
+  content: "";
+  position: absolute;
+  left: -8%; right: -8%;
+  background: linear-gradient(#b09b7c, #6f5d45);
+  border: 1px solid #2f241a;
+}
+.columna::before { top: 0; height: 26px; }
+.columna::after { bottom: 0; height: 30px; }
+
+/* ===== Encabezado ===== */
+.portada {
+  text-align: center;
+  padding: 2.2rem 1rem 1.2rem;
+  padding-inline: clamp(40px, 9vw, 130px);
+}
+.portada h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  line-height: 1.1;
+  color: var(--pergamino);
+  text-shadow: 0 3px 14px rgba(0, 0, 0, .8);
+}
+.portada p {
+  margin: .6rem auto 0;
+  max-width: 40rem;
+  font-style: italic;
+  color: var(--laton);
+}
+
+/* ===== Línea de tiempo ===== */
+.linea {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: .6rem clamp(40px, 9vw, 130px) .4rem;
+  background: linear-gradient(rgba(20, 12, 7, .96), rgba(20, 12, 7, .85));
+  border-block: 1px solid var(--laton-oscuro);
+  backdrop-filter: blur(4px);
+}
+.linea ol {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+}
+.linea li {
+  position: relative;
+  flex: 1 0 112px;
+}
+.linea li::before {            /* tramo de la línea entre fechas */
+  content: "";
+  position: absolute;
+  top: .65rem;
+  left: 0; right: 0;
+  height: 2px;
+  background: var(--laton-oscuro);
+}
+.linea a {
+  position: relative;
+  display: block;
+  padding: 1.5rem .3rem .4rem;
+  text-align: center;
+  text-decoration: none;
+  color: var(--pergamino);
+}
+.linea a::before {             /* punto de la fecha */
+  content: "";
+  position: absolute;
+  top: .2rem;
+  left: 50%;
+  width: .9rem; height: .9rem;
+  margin-left: -.45rem;
+  border-radius: 50%;
+  background: var(--pared-oscura);
+  border: 2px solid var(--laton);
+  transition: background .2s, box-shadow .2s;
+}
+.linea .fecha {
+  display: block;
+  font-family: var(--display);
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+.linea .nombre {
+  display: block;
+  font-size: .85rem;
+  line-height: 1.2;
+  opacity: .8;
+}
+.linea a:hover::before,
+.linea a:focus-visible::before {
+  background: var(--laton);
+  box-shadow: 0 0 12px var(--laton);
+}
+.linea a:focus-visible { outline: 2px solid var(--laton); outline-offset: 2px; }
+
+/* fecha activa (la sala abierta) */
+body:has(#revolucion:target) a[href="#revolucion"],
+body:has(#artscrafts:target) a[href="#artscrafts"],
+body:has(#nouveau:target) a[href="#nouveau"],
+body:has(#vanguardias:target) a[href="#vanguardias"],
+body:has(#destijl:target) a[href="#destijl"],
+body:has(#bauhaus:target) a[href="#bauhaus"],
+body:has(#suizo:target) a[href="#suizo"],
+body:has(#pop:target) a[href="#pop"],
+body:has(#posmoderno:target) a[href="#posmoderno"],
+body:has(#referencias:target) a[href="#referencias"] {
+  color: var(--laton);
+}
+body:has(#revolucion:target) a[href="#revolucion"]::before,
+body:has(#artscrafts:target) a[href="#artscrafts"]::before,
+body:has(#nouveau:target) a[href="#nouveau"]::before,
+body:has(#vanguardias:target) a[href="#vanguardias"]::before,
+body:has(#destijl:target) a[href="#destijl"]::before,
+body:has(#bauhaus:target) a[href="#bauhaus"]::before,
+body:has(#suizo:target) a[href="#suizo"]::before,
+body:has(#pop:target) a[href="#pop"]::before,
+body:has(#posmoderno:target) a[href="#posmoderno"]::before,
+body:has(#referencias:target) a[href="#referencias"]::before {
+  background: var(--laton);
+  box-shadow: 0 0 12px var(--laton);
+}
+
+/* ===== Salas (una visible a la vez con :target) ===== */
+main { padding: 2rem clamp(40px, 9vw, 130px) 3rem; }
+
+.sala {
+  display: none;
+  max-width: 62rem;
+  margin: 0 auto;
+}
+.sala:target { display: block; }
+#inicio { display: block; }
+body:has(.sala:target:not(#inicio)) #inicio { display: none; }
+
+.marco {
+  padding: clamp(1.2rem, 4vw, 2.6rem);
+  color: var(--tinta);
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(255, 255, 255, .35), transparent 60%),
+    radial-gradient(ellipse at 90% 100%, rgba(120, 80, 30, .25), transparent 55%),
+    var(--pergamino);
+  box-shadow:
+    0 0 0 3px var(--pared-oscura),
+    0 0 0 11px #8b6a2f,
+    0 0 0 13px var(--laton),
+    0 28px 60px rgba(0, 0, 0, .65);
+}
+.sala:target .marco { animation: abrir .35s ease-out; }
+@keyframes abrir {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+.marco header { margin-bottom: 1.2rem; padding-bottom: .8rem; border-bottom: 1px solid #b9a77f; }
+.epoca {
+  margin: 0;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--laton-oscuro);
+}
+.marco h2 {
+  margin: .1rem 0 0;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+  line-height: 1.15;
+  color: var(--vino);
+}
+.marco h3 {
+  margin: 0 0 .4rem;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 1.35rem;
+  color: var(--laton-oscuro);
+}
+.marco p { margin: 0 0 1rem; max-width: 46rem; }
+.marco ul { margin: 0; padding-left: 1.2rem; }
+.marco li { margin-bottom: .55rem; }
+.marco li::marker { color: var(--laton-oscuro); }
+
+.columnas {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2rem;
+  margin-top: 1.4rem;
+}
+.columnas > div:last-child {
+  padding: 1rem 1.2rem 1rem 1rem;
+  background: rgba(90, 60, 20, .09);
+  border-left: 3px solid var(--laton);
+}
+
+/* ===== Cuadro de imagen de cada sala ===== */
+.cuadro { margin: 0 0 1.4rem; }
+.imagen {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: clamp(200px, 34vw, 340px);
+  padding: 1rem;
+  text-align: center;
+  background: repeating-linear-gradient(45deg, rgba(90, 60, 20, .10) 0 10px, rgba(90, 60, 20, .04) 10px 20px);
+  border: 1px solid #8b6a2f;
+  /* paspartú: borde interior claro alrededor de la imagen */
+  box-shadow: inset 0 0 0 6px var(--pergamino), inset 0 0 0 7px #b9a77f, 0 4px 14px rgba(0, 0, 0, .25);
+}
+.imagen::before {              /* texto que se ve mientras no haya imagen */
+  content: attr(data-texto);
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--laton-oscuro);
+}
+.imagen::after {               /* la imagen que eliges en --imagen */
+  content: "";
+  position: absolute;
+  inset: 7px;
+  background-image: var(--imagen, none);
+  background-size: cover;
+  background-position: center;
+}
+.cuadro figcaption {
+  margin-top: .5rem;
+  font-size: .95rem;
+  font-style: italic;
+  color: var(--tinta);
+}
+
+/* botones de sala anterior / siguiente */
+.paso {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.8rem;
+  padding-top: 1rem;
+  border-top: 1px solid #b9a77f;
+}
+.paso a {
+  padding: .5rem 1rem;
+  font-size: 1rem;
+  text-decoration: none;
+  color: var(--pergamino);
+  background: var(--pared-oscura);
+  border: 1px solid var(--laton);
+}
+.paso a:hover,
+.paso a:focus-visible { background: var(--vino); outline: none; }
+.paso a:focus-visible { box-shadow: 0 0 0 3px var(--laton); }
+
+/* ===== Pie ===== */
+.pie {
+  padding: 1.2rem 1rem 2rem;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--pergamino);
+  text-shadow: 0 2px 8px #000;
+}
+.pie p { margin: .2rem 0; }
+
+/* ===== Móvil ===== */
+@media (max-width: 720px) {
+  html { scroll-padding-top: 8rem; }
+  .columnas { grid-template-columns: 1fr; }
+  body { font-size: 1.05rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .sala:target .marco { animation: none; }
+}
